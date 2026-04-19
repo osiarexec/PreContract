@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALX Africa — Governance Structure (Post-Expansion)</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#061528;--bg2:#0A1F3A;--bg3:#0D2645;
+  --navy:#042C53;--blue:#0C447C;--blue-mid:#185FA5;--blue-lt:#378ADD;--blue-pale:#B5D4F4;
+  --teal:#00C896;--teal-mid:#00A876;--teal-dk:#007A55;--teal-pale:#C8F5E8;
+  --amber:#EF9F27;--amber-dk:#BA7517;--amber-pale:#FAEEDA;
+  --coral:#F0997B;--white:#FFFFFF;
+  --text-dim:rgba(255,255,255,0.45);--text-mid:rgba(255,255,255,0.7);
+  --border:rgba(255,255,255,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--white);min-height:100vh;}
+
+.header{padding:40px 56px 28px;background:linear-gradient(135deg,rgba(0,100,70,0.25) 0%,transparent 70%);border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.alx-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--teal);margin-bottom:10px;display:flex;align-items:center;gap:10px;}
+.alx-tag::before{content:'';width:28px;height:2px;background:var(--teal);}
+.header h1{font-family:'Montserrat',sans-serif;font-size:32px;font-weight:800;line-height:1.15;margin-bottom:10px;}
+.header h1 em{color:var(--teal);font-style:normal;}
+.header-desc{font-size:13px;font-weight:300;color:var(--text-mid);max-width:680px;line-height:1.75;margin-bottom:18px;}
+.pills{display:flex;gap:10px;flex-wrap:wrap;}
+.pill{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:1px;padding:5px 14px;border-radius:3px;border:1px solid;text-transform:uppercase;}
+.pill-teal{border-color:rgba(0,200,150,0.4);color:var(--teal);background:rgba(0,200,150,0.06);}
+.pill-blue{border-color:rgba(55,138,221,0.4);color:var(--blue-lt);background:rgba(55,138,221,0.06);}
+.pill-amber{border-color:rgba(239,159,39,0.4);color:var(--amber);background:rgba(239,159,39,0.06);}
+.pill-dim{border-color:rgba(255,255,255,0.15);color:var(--text-dim);}
+
+.controls{padding:18px 56px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:20px;flex-wrap:wrap;background:rgba(0,200,150,0.03);}
+.ctrl-label{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);}
+.ctrl-count{font-family:'Montserrat',sans-serif;font-size:24px;font-weight:800;color:var(--teal);min-width:30px;}
+input[type=range]{width:160px;accent-color:var(--teal);}
+.facts{display:flex;gap:20px;flex-wrap:wrap;margin-left:16px;}
+.fact{font-size:11px;color:var(--text-dim);}
+.fact span{color:var(--text-mid);font-weight:600;}
+
+.hint{text-align:center;font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);padding:10px;border-bottom:1px solid var(--border);}
+.canvas{padding:24px 32px 40px;overflow-x:auto;}
+.svg-wrap{width:100%;min-width:860px;}
+
+.legend{display:flex;gap:24px;flex-wrap:wrap;padding:14px 32px;border-top:1px solid var(--border);}
+.leg{display:flex;align-items:center;gap:8px;font-size:10px;color:var(--text-dim);}
+.leg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+.leg-line{width:20px;height:1px;border-top:1px dashed;flex-shrink:0;}
+
+.overlay{display:none;position:fixed;inset:0;background:rgba(4,20,44,0.82);backdrop-filter:blur(6px);z-index:500;align-items:center;justify-content:center;padding:20px;}
+.overlay.open{display:flex;}
+.panel{background:var(--bg2);border:1px solid rgba(0,200,150,0.2);border-top:3px solid var(--teal);border-radius:4px;padding:30px 32px;max-width:540px;width:100%;position:relative;animation:slideUp .2s ease;}
+@keyframes slideUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.panel-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:var(--text-dim);width:28px;height:28px;border-radius:2px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
+.panel-close:hover{background:rgba(255,255,255,0.12);color:var(--white);}
+.panel-badge{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:3px 10px;border-radius:2px;margin-bottom:12px;display:inline-block;}
+.pb-teal{background:rgba(0,200,150,0.12);color:var(--teal);border:1px solid rgba(0,200,150,0.25);}
+.pb-blue{background:rgba(55,138,221,0.12);color:var(--blue-lt);border:1px solid rgba(55,138,221,0.25);}
+.pb-amber{background:rgba(239,159,39,0.12);color:var(--amber);border:1px solid rgba(239,159,39,0.25);}
+.pb-coral{background:rgba(240,153,123,0.12);color:var(--coral);border:1px solid rgba(240,153,123,0.25);}
+.pb-dim{background:rgba(255,255,255,0.06);color:var(--text-mid);border:1px solid rgba(255,255,255,0.12);}
+.panel h2{font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;margin-bottom:10px;}
+.panel p{font-size:13px;color:var(--text-mid);line-height:1.7;margin-bottom:12px;}
+.panel ul{list-style:none;padding:0;}
+.panel ul li{font-size:12px;color:var(--text-dim);padding:6px 0 6px 14px;border-bottom:1px solid var(--border);line-height:1.5;position:relative;}
+.panel ul li::before{content:'—';position:absolute;left:0;color:rgba(0,200,150,0.4);font-size:10px;}
+.panel ul li:last-child{border-bottom:none;}
+.panel ul li strong{color:var(--text-mid);font-weight:600;}
+
+.drill{display:none;position:fixed;inset:0;background:var(--bg);z-index:600;overflow-y:auto;padding:40px 48px;animation:fadeIn .2s ease;}
+.drill.open{display:block;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.drill-back{display:inline-flex;align-items:center;gap:8px;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);padding:8px 16px;border-radius:3px;cursor:pointer;margin-bottom:28px;transition:all .15s;}
+.drill-back:hover{background:rgba(255,255,255,0.08);color:var(--white);}
+.drill-title{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:800;margin-bottom:4px;}
+.drill-sub{font-size:12px;color:var(--text-dim);margin-bottom:28px;}
+.drill-wrap{width:100%;overflow-x:auto;}
+</style>
+</head>
+<body>
+
+<!-- Geometric accents -->
+<div style="position:fixed;top:0;right:0;width:220px;height:220px;pointer-events:none;opacity:0.06;overflow:hidden;">
+  <svg width="220" height="220" viewBox="0 0 220 220">
+    <polyline points="180,20 220,60 180,100" fill="none" stroke="#00C896" stroke-width="2"/>
+    <polyline points="160,20 200,60 160,100" fill="none" stroke="#00C896" stroke-width="2"/>
+    <polyline points="140,20 180,60 140,100" fill="none" stroke="#00C896" stroke-width="2"/>
+  </svg>
+</div>
+<div style="position:fixed;bottom:0;left:0;width:160px;height:160px;pointer-events:none;opacity:0.04;overflow:hidden;">
+  <svg width="160" height="160" viewBox="0 0 160 160">
+    <polyline points="20,140 60,100 20,60" fill="none" stroke="#00C896" stroke-width="2"/>
+    <polyline points="40,140 80,100 40,60" fill="none" stroke="#00C896" stroke-width="2"/>
+  </svg>
+</div>
+
+<div class="header">
+  <div class="alx-tag">ALX Africa · Governance Framework</div>
+  <h1>Governance Structure<br><em>Post-Expansion</em></h1>
+  <p class="header-desc">The mycelium scaling model. Every five local entities automatically form a Regional Coordinating Council — a self-contained oversight cluster with its own Legal Counsel and Regional Secretary. The structure extends without redesign. Use the slider to simulate growth.</p>
+  <div class="pills">
+    <span class="pill pill-teal">1 Council per 5 Entities</span>
+    <span class="pill pill-amber">CLC + Deputies at 5 &amp; 10 Councils</span>
+    <span class="pill pill-blue">Group Secretariat + 2 Deputies</span>
+    <span class="pill pill-dim">Drag slider to scale</span>
+  </div>
+</div>
+
+<div class="controls">
+  <span class="ctrl-label">Regional Coordinating Councils</span>
+  <input type="range" min="1" max="8" value="2" step="1" id="slider">
+  <span class="ctrl-count" id="cnt">2</span>
+  <div class="facts">
+    <div class="fact">Entities: <span id="f-ent">10</span></div>
+    <div class="fact">Legal Counsels: <span id="f-leg">2</span></div>
+    <div class="fact">Regional Secs: <span id="f-rs">2</span></div>
+    <div class="fact">CLC Deputies: <span id="f-dep">2</span></div>
+    <div class="fact">Secretariat: <span id="f-sec">GS + 2 deputies</span></div>
+  </div>
+</div>
+
+<div class="hint">↓ &nbsp; Click any node to explore &nbsp;·&nbsp; Click Group Secretariat or CLC to see internal structure with reporting chains</div>
+
+<div class="canvas">
+<div class="svg-wrap">
+<svg id="svg-main" width="100%" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- ═══ STATIC TOP SECTION ═══ -->
+
+<!-- Group Board header -->
+<g onclick="openPanel('board')" style="cursor:pointer">
+  <rect x="240" y="18" width="440" height="30" rx="3" fill="#0C447C" stroke="#00C896" stroke-width="0.8"/>
+  <text font-family="Montserrat,sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" x="460" y="33" text-anchor="middle" dominant-baseline="central" letter-spacing="1">Group Board</text>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="rgba(0,200,150,0.6)" x="620" y="33" text-anchor="middle" dominant-baseline="central">6 directors + RIEDs</text>
+</g>
+<rect x="240" y="48" width="440" height="66" rx="0" fill="#0A2D50" stroke="#0C447C" stroke-width="0.5"/>
+<rect x="240" y="18" width="440" height="96" rx="3" fill="none" stroke="#0C447C" stroke-width="0.8"/>
+
+<!-- Statutory Committees (left inside board) -->
+<g onclick="openPanel('committees')" style="cursor:pointer">
+  <rect x="254" y="56" width="190" height="42" rx="3" fill="#0C447C" stroke="#378ADD" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="9" fill="#E6F1FB" x="349" y="70" text-anchor="middle" dominant-baseline="central">Statutory Committees (×5)</text>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#85B7EB" x="349" y="86" text-anchor="middle" dominant-baseline="central">A&amp;R · Nom · RemHC · SEMA · TDI</text>
+</g>
+
+<!-- CLC inside board -->
+<g onclick="openDrill('clc')" style="cursor:pointer">
+  <rect x="454" y="56" width="210" height="42" rx="3" fill="#6B3800" stroke="#EF9F27" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="10" fill="#FAEEDA" x="559" y="70" text-anchor="middle" dominant-baseline="central">Chief Legal Counsel</text>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#FAC775" x="559" y="86" text-anchor="middle" dominant-baseline="central">Board member + deputies (scales) · click ↓</text>
+</g>
+
+<!-- Advisory — right -->
+<g onclick="openPanel('advisory')" style="cursor:pointer">
+  <rect x="738" y="38" width="116" height="54" rx="3" fill="#0D2645" stroke="#378ADD" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="9" fill="#E6F1FB" x="796" y="56" text-anchor="middle" dominant-baseline="central">Ad Hoc</text>
+  <text font-family="Open Sans,sans-serif" font-size="9" fill="#E6F1FB" x="796" y="70" text-anchor="middle" dominant-baseline="central">Advisory</text>
+  <text font-family="Open Sans,sans-serif" font-size="7" fill="#85B7EB" x="796" y="84" text-anchor="middle" dominant-baseline="central">by Board resolution</text>
+</g>
+<line x1="680" y1="67" x2="738" y2="67" stroke="#378ADD" stroke-width="0.5"/>
+
+<!-- Group Secretariat left -->
+<g onclick="openDrill('secretary')" style="cursor:pointer">
+  <rect x="60" y="38" width="132" height="72" rx="3" fill="#004D3A" stroke="#00C896" stroke-width="0.8"/>
+  <rect x="60" y="38" width="4" height="72" rx="2" fill="#00C896"/>
+  <text font-family="Open Sans,sans-serif" font-size="10" fill="#E1F5EE" x="130" y="60" text-anchor="middle" dominant-baseline="central">Group Secretariat</text>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#00C896" x="130" y="77" text-anchor="middle" dominant-baseline="central">GS + 2 deputies</text>
+  <text font-family="Open Sans,sans-serif" font-size="7" fill="rgba(0,200,150,0.6)" x="130" y="93" text-anchor="middle" dominant-baseline="central">click to expand ↓</text>
+</g>
+<line x1="192" y1="74" x2="240" y2="74" stroke="#00C896" stroke-width="0.5" stroke-dasharray="5 3"/>
+<text font-family="Open Sans,sans-serif" font-size="8" fill="#00A876" x="216" y="68" text-anchor="middle">assists</text>
+
+<!-- Executive Chairman -->
+<line x1="460" y1="114" x2="460" y2="142" stroke="#00C896" stroke-width="0.8"/>
+<g onclick="openPanel('chairman')" style="cursor:pointer">
+  <rect x="320" y="142" width="280" height="36" rx="3" fill="#042C53" stroke="#00C896" stroke-width="0.8"/>
+  <rect x="320" y="142" width="4" height="36" rx="2" fill="#00C896"/>
+  <text font-family="Montserrat,sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" x="460" y="160" text-anchor="middle" dominant-baseline="central" letter-spacing="0.5">Executive Chairman</text>
+</g>
+<line x1="460" y1="178" x2="460" y2="198" stroke="#378ADD" stroke-width="0.5"/>
+
+<!-- Dynamic layer -->
+<g id="dyn"></g>
+</svg>
+</div>
+</div>
+
+<div class="legend">
+  <div class="leg"><div class="leg-dot" style="background:#0C447C;border:1px solid #378ADD"></div>Statutory / fiduciary</div>
+  <div class="leg"><div class="leg-dot" style="background:#004D3A;border:1px solid #00C896"></div>Secretariat</div>
+  <div class="leg"><div class="leg-dot" style="background:#3A1E00;border:1px solid #EF9F27"></div>Legal</div>
+  <div class="leg"><div class="leg-dot" style="background:#0D2645;border:1px solid #378ADD"></div>Entity level</div>
+  <div class="leg"><div class="leg-line" style="border-color:#00C896"></div>Secretariat reporting</div>
+  <div class="leg"><div class="leg-line" style="border-color:#EF9F27"></div>Legal reporting</div>
+</div>
+
+<!-- PANEL OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeOverlay(event)">
+  <div class="panel">
+    <button class="panel-close" onclick="closePanels()">✕</button>
+    <div id="p-badge" class="panel-badge"></div>
+    <h2 id="p-title"></h2>
+    <p id="p-desc"></p>
+    <ul id="p-list"></ul>
+  </div>
+</div>
+
+<!-- SECRETARY DRILL (dynamic) -->
+<div class="drill" id="drill-secretary">
+  <button class="drill-back" onclick="closeDrill('secretary')">← Back to full structure</button>
+  <div class="drill-title">Group Secretariat</div>
+  <div class="drill-sub" id="sec-sub">Post-expansion internal structure</div>
+  <div class="drill-wrap" id="sec-svg"></div>
+</div>
+
+<!-- CLC DRILL (dynamic) -->
+<div class="drill" id="drill-clc">
+  <button class="drill-back" onclick="closeDrill('clc')">← Back to full structure</button>
+  <div class="drill-title">Chief Legal Counsel</div>
+  <div class="drill-sub" id="clc-sub">Post-expansion internal structure</div>
+  <div class="drill-wrap" id="clc-svg"></div>
+</div>
+
+<script>
+var N = 2;
+const W = 960;
+
+const pdata = {
+  board:{badge:'Statutory · Fiduciary',bc:'pb-blue',title:'Group Board',
+    desc:'Six core directors plus Regional Independent Executive Directors (one per region) plus the Chief Legal Counsel. All five statutory committees operate within the Board.',
+    list:['Capital structure, mission pivots, material litigation','New market entry, merger/acquisition, dissolution','RIEDs provide regional intelligence at board level','Quorum: 70% of directors present, rounded down, excluding GCS and CLC']},
+  committees:{badge:'Statutory · Fiduciary',bc:'pb-blue',title:'Statutory Committees ×5',
+    desc:'Five permanent fiduciary organs of the Board post-expansion.',
+    list:['Audit & Risk Committee — financial integrity, risk register. Quarterly.','Nominations Committee — director/RIED recruitment, Chairman appointment, succession.','Remuneration & Human Capital Committee — compensation, institutional spine recruitment.','Social, Ethics & Mission Alignment Committee — ALX Mission guardianship.','Technology & Digital Innovation Committee — Digital Governance Stack, cybersecurity, AI.']},
+  advisory:{badge:'Advisory · Ad Hoc',bc:'pb-coral',title:'Ad Hoc Advisory Body',
+    desc:'Convened by Board resolution for specialist matters outside the scope of the five standing statutory committees. Non-fiduciary.',
+    list:['Chaired by a director','Quorum: Chair + 2','Dissolved after mandate completed','Replaces the standing Advisory Council — all three councils elevated to statutory committees post-expansion']},
+  chairman:{badge:'Executive',bc:'pb-teal',title:'Executive Chairman',
+    desc:'Post-expansion, the role evolves from direct oversight of the Coordinating Team to orchestrating the Regional Coordinating Council network. Single point of accountability between Board and all Regional Coordinating Councils.',
+    list:['Appointed by the Group Board','Coordinates all Regional Coordinating Councils','Cross-regional alignment and escalation authority','Escalation path for matters exceeding Regional Council limits']},
+  rcc:{badge:'Regional Coordinating Council',bc:'pb-blue',title:'Regional Coordinating Council',
+    desc:'Formed automatically for every five local entities. Chaired by a Regional Independent Executive Director. Does not execute operations — coordinates, aligns, and escalates.',
+    list:['RIED (Chair) + 5 Local Entity CEOs + Regional Secretary','One Legal Counsel embedded, reporting to CLC','Quorum: RIED + 3 of 5 CEOs','Monthly + ad hoc','Escalates to Executive Chairman']},
+  entity:{badge:'Entity Level',bc:'pb-dim',title:'Local Entity',
+    desc:'Each legal entity operates in its jurisdiction subject to independent statutory and regulatory obligations. CEO sits in the Regional Coordinating Council.',
+    list:['Separate legal personality','Subject to local company law and education regulation','CEO represents entity in Regional Coordinating Council']},
+  localboard:{badge:'Entity Level',bc:'pb-dim',title:'Local Board',
+    desc:'Responsible for jurisdictional compliance and operational health. Meets quarterly minimum, 21 days before Group Board.',
+    list:['Minimum 3 directors; quorum 2 of 3','Chair signs Annual Governance Attestation','Approves contracts up to 80% of gross income/expenditure','Escalates to Regional Coordinating Council']},
+  localexec:{badge:'Entity Level',bc:'pb-dim',title:'Local Executive',
+    desc:'Operational management team executing entity-level strategy under Local Board oversight.',
+    list:['Day-to-day operational execution','Reports to Local Board']}
+};
+
+function openPanel(id){
+  const d=pdata[id]; if(!d) return;
+  document.getElementById('p-badge').className='panel-badge '+d.bc;
+  document.getElementById('p-badge').textContent=d.badge;
+  document.getElementById('p-title').textContent=d.title;
+  document.getElementById('p-desc').textContent=d.desc;
+  document.getElementById('p-list').innerHTML=d.list.map(i=>'<li>'+i+'</li>').join('');
+  document.getElementById('overlay').classList.add('open');
+}
+function closeOverlay(e){if(e.target===document.getElementById('overlay'))closePanels();}
+function closePanels(){document.getElementById('overlay').classList.remove('open');}
+function openDrill(id){
+  if(id==='secretary')buildSecDrill();
+  if(id==='clc')buildClcDrill();
+  document.getElementById('drill-'+id).classList.add('open');
+}
+function closeDrill(id){document.getElementById('drill-'+id).classList.remove('open');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closePanels();['secretary','clc'].forEach(id=>document.getElementById('drill-'+id).classList.remove('open'));}});
+
+function clcDeps(n){
+  if(n>=10) return 4;
+  if(n>=5) return 3;
+  return 2;
+}
+function secOfficers(n){ return Math.floor(n/10); }
+
+function buildSecDrill(){
+  var n=N;
+  var officers=secOfficers(n);
+  var secLabel='Group Secretary + 2 deputies'+(officers>0?' + '+officers+' officer'+(officers>1?'s':''):'');
+  document.getElementById('sec-sub').textContent='Post-expansion · '+n+' Regional Secretaries · '+n+'×5 Local Secretaries · '+secLabel;
+
+  var svgH=400;
+  var h='<svg width="100%" viewBox="0 0 960 '+svgH+'" xmlns="http://www.w3.org/2000/svg">';
+
+  // Group Secretariat box
+  h+='<rect x="356" y="20" width="248" height="52" rx="3" fill="#004D3A" stroke="#00C896" stroke-width="0.8"/>';
+  h+='<rect x="356" y="20" width="4" height="52" rx="2" fill="#00C896"/>';
+  h+='<text font-family="Montserrat,sans-serif" font-size="13" font-weight="700" fill="#E1F5EE" x="480" y="38" text-anchor="middle" dominant-baseline="central">Group Secretariat</text>';
+  h+='<text font-family="Open Sans,sans-serif" font-size="10" fill="#00C896" x="480" y="56" text-anchor="middle" dominant-baseline="central">'+secLabel+'</text>';
+
+  // Deputy 1 and 2
+  h+='<line x1="480" y1="72" x2="480" y2="96" stroke="#00C896" stroke-width="0.5"/>';
+  h+='<line x1="280" y1="96" x2="680" y2="96" stroke="#00C896" stroke-width="0.5"/>';
+  h+='<line x1="280" y1="96" x2="280" y2="114" stroke="#00C896" stroke-width="0.5"/>';
+  h+='<line x1="680" y1="96" x2="680" y2="114" stroke="#00C896" stroke-width="0.5"/>';
+  h+='<rect x="180" y="114" width="200" height="40" rx="3" fill="#007A55" stroke="#00C896" stroke-width="0.5"/>';
+  h+='<text font-family="Open Sans,sans-serif" font-size="10" fill="#E1F5EE" x="280" y="128" text-anchor="middle" dominant-baseline="central">Deputy Secretary 1</text>';
+  h+='<text font-family="Open Sans,sans-serif" font-size="9" fill="#00C896" x="280" y="144" text-anchor="middle" dominant-baseline="central">statutory registers · DMS</text>';
+  h+='<rect x="580" y="114" width="200" height="40" rx="3" fill="#007A55" stroke="#00C896" stroke-width="0.5"/>';
+  h+='<text font-family="Open Sans,sans-serif" font-size="10" fill="#E1F5EE" x="680" y="128" text-anchor="middle" dominant-baseline="central">Deputy Secretary 2</text>';
+  h+='<text font-family="Open Sans,sans-serif" font-size="9" fill="#00C896" x="680" y="144" text-anchor="middle" dominant-baseline="central">compliance calendar · attestation</text>';
+
+  // Tier label: Regional Secretaries
+  h+='<line x1="480" y1="154" x2="480" y2="178" stroke="#00C896" stroke-width="0.5" stroke-dasharray="4 3"/>';
+  h+='<text font-family="Open Sans,sans-serif" font-size="9" fill="#00C896" x="480" y="176" text-anchor="middle" opacity="0.7">Regional Secretaries ('+n+') — intermediate tier</text>';
+
+  // Regional Secs row
+  var rsGap=n>1?Math.round((W-80-70)/(n-1)):0;
+  var rsStart=n===1?Math.round((W-70)/2):40;
+  for(var i=0;i<n;i++){
+    var rx=rsStart+i*rsGap;
+    var rcx=rx+35;
+    if(i>0)h+='<line x1="'+(rsStart+(i-1)*rsGap+70)+'" y1="200" x2="'+rx+'" y2="200" stroke="#00C896" stroke-width="0.5" stroke-dasharray="3 2"/>';
+    h+='<line x1="'+rcx+'" y1="178" x2="'+rcx+'" y2="188" stroke="#00C896" stroke-width="0.5" stroke-dasharray="3 2"/>';
+    h+='<rect x="'+rx+'" y="188" width="70" height="40" rx="3" fill="#004D3A" stroke="#00C896" stroke-width="0.5"/>';
+    h+='<text font-family="Open Sans,sans-serif" font-size="9" fill="#E1F5EE" x="'+rcx+'" y="202" text-anchor="middle" dominant-baseline="central">Reg. Sec.</text>';
+    h+='<text font-family="Open Sans,sans-serif" font-size="8" fill="#00A876" x="'+rcx+'" y="218" text-anchor="middle" dominant-baseline="central">Council '+(i+1)+'</text>';
+  }
+
+  // Arrow down from each Regional Sec to local secs
+  h+='<text font-family="Open Sans,sans-serif" font-size="9" fill="#00C896" x="480" y="248" text-anchor="middle" opacity="0.6">Local Secretaries ('+n+'×5='+n*5+') — report to their Regional Secretary</text>';
+  h+='<text font-family="Open Sans,sans-serif" font-size="8" fill="rgba(255,255,255,0.2)" x="480" y="268" text-anchor="middle">Each Regional Secretary files outputs into the Group DMS and is reviewed by the Group Secretariat.</text>';
+  h+='<text font-family="Open Sans,sans-serif" font-size="8" fill="rgba(0,200,150,0.25)" x="480" y="286" text-anchor="middle">Scaling rule: +1 Secretariat officer for every 10 Regional Coordinating Councils.</text>';
+
+  h+='</svg>';
+  document.getElementById('sec-svg').innerHTML=h;
+}
+
+function buildClcDrill(){
+  var n=N;
+  var deps=clcDeps(n);
+  var depLabel='Chief Legal Counsel + '+deps+' deputies';
+  if(n>=10) depLabel+=' (4th deputy added at 10 councils)';
+  else if(n>=5) depLabel+=' (3rd deputy added at 5 councils)';
+  else depLabel+=' (base post-expansion structure)';
+  document.getElementById('clc-sub').textContent='Post-expansion · '+n+' Regional Legal Counsels · '+depLabel;
+
+  var svgH=380;
+  var h='<svg width="100%" viewBox="0 0 960 '+svgH+'" xmlns="http://www.w3.org/2000/svg">';
+
+  // CLC box
+  h+='<rect x="336" y="20" width="288" height="52" rx="3" fill="#3A1E00" stroke="#EF9F27" stroke-width="0.8"/>';
+  h+='<rect x="336" y="20" width="4" height="52" rx="2" fill="#EF9F27"/>';
+  h+='<text font-family="Montserrat,sans-serif" font-size="13" font-weight="700" fill="#FAEEDA" x="480" y="38" text-anchor="middle" dominant-baseline="central">Chief Legal Counsel</text>';
+  h+='<text font-family="Open Sans,sans-serif" font-size="10" fill="#EF9F27" x="480" y="56" text-anchor="middle" dominant-baseline="central">Board member · '+deps+' deputies</text>';
+
+  // Deputies
+  h+='<line x1="480" y1="72" x2="480" y2="96" stroke="#EF9F27" stroke-width="0.5"/>';
+  var depPositions=deps===2?[280,680]:deps===3?[200,480,760]:[140,360,600,820];
+  var railL=depPositions[0]; var railR=depPositions[depPositions.length-1];
+  h+='<line x1="'+railL+'" y1="96" x2="'+railR+'" y2="96" stroke="#EF9F27" stroke-width="0.5"/>';
+  depPositions.forEach(function(dp,idx){
+    h+='<line x1="'+dp+'" y1="96" x2="'+dp+'" y2="114" stroke="#EF9F27" stroke-width="0.5"/>';
+    h+='<rect x="'+(dp-90)+'" y="114" width="180" height="40" rx="3" fill="#6B3800" stroke="#EF9F27" stroke-width="0.5"/>';
+    h+='<text font-family="Open Sans,sans-serif" font-size="9" fill="#FAEEDA" x="'+dp+'" y="128" text-anchor="middle" dominant-baseline="central">Deputy Legal Counsel '+(idx+1)+'</text>';
+    var spec=idx===0?'commercial &amp; contracts':idx===1?'regulatory &amp; compliance':'jurisdiction specialist';
+    h+='<text font-family="Open Sans,sans-serif" font-size="8" fill="#FAC775" x="'+dp+'" y="144" text-anchor="middle" dominant-baseline="central">'+spec+'</text>';
+  });
+
+  // Regional Legal Counsels
+  h+='<line x1="480" y1="154" x2="480" y2="178" stroke="#EF9F27" stroke-width="0.5" stroke-dasharray="4 3"/>';
+  h+='<text font-family="Open Sans,sans-serif" font-size="9" fill="#EF9F27" x="480" y="176" text-anchor="middle" opacity="0.7">Regional Legal Counsels ('+n+') — intermediate tier — one per Regional Coordinating Council</text>';
+
+  var rgGap=n>1?Math.round((W-80-70)/(n-1)):0;
+  var rgStart=n===1?Math.round((W-70)/2):40;
+  for(var i=0;i<n;i++){
+    var rx=rgStart+i*rgGap;
+    var rcx=rx+35;
+    if(i>0)h+='<line x1="'+(rgStart+(i-1)*rgGap+70)+'" y1="200" x2="'+rx+'" y2="200" stroke="#EF9F27" stroke-width="0.5" stroke-dasharray="3 2"/>';
+    h+='<line x1="'+rcx+'" y1="178" x2="'+rcx+'" y2="188" stroke="#EF9F27" stroke-width="0.5" stroke-dasharray="3 2"/>';
+    h+='<rect x="'+rx+'" y="188" width="70" height="40" rx="3" fill="#3A1E00" stroke="#EF9F27" stroke-width="0.5"/>';
+    h+='<text font-family="Open Sans,sans-serif" font-size="9" fill="#FAEEDA" x="'+rcx+'" y="202" text-anchor="middle" dominant-baseline="central">Reg. Legal</text>';
+    h+='<text font-family="Open Sans,sans-serif" font-size="8" fill="#FAC775" x="'+rcx+'" y="218" text-anchor="middle" dominant-baseline="central">Council '+(i+1)+'</text>';
+  }
+
+  h+='<text font-family="Open Sans,sans-serif" font-size="9" fill="#EF9F27" x="480" y="248" text-anchor="middle" opacity="0.6">Local Legal Counsels ('+n+'×5='+n*5+') — report to their Regional Legal Counsel</text>';
+  h+='<text font-family="Open Sans,sans-serif" font-size="8" fill="rgba(255,255,255,0.2)" x="480" y="268" text-anchor="middle">Each Regional Legal Counsel is embedded in the Regional Coordinating Council and reports to the Chief Legal Counsel.</text>';
+  h+='<text font-family="Open Sans,sans-serif" font-size="8" fill="rgba(239,159,39,0.3)" x="480" y="286" text-anchor="middle">Scaling: 3rd deputy at 5 councils · 4th deputy at 10 councils.</text>';
+
+  h+='</svg>';
+  document.getElementById('clc-svg').innerHTML=h;
+}
+
+function render(n){
+  N=n;
+  var svgW=W;
+  var rccY=198;
+  var rccW=100; var rccH=68;
+  var entW=44; var entH=32; var entGap=4;
+  var colGap,startX;
+  if(n===1){startX=Math.round((svgW-rccW)/2);colGap=0;}
+  else if(n<=4){colGap=Math.round((svgW-60-rccW)/(n-1));startX=30;}
+  else{colGap=Math.round((svgW-40-rccW)/(n-1));startX=20;}
+  function cx(i){return startX+i*colGap+Math.round(rccW/2);}
+
+  var entY=rccY+rccH+44;
+  var boardY=entY+entH+5;
+  var execY=boardY+entH+5;
+  var secRailY=execY+entH+32;
+  var legRailY=secRailY+18;
+  var svgH=legRailY+42;
+
+  document.getElementById('svg-main').setAttribute('viewBox','0 0 '+svgW+' '+svgH);
+
+  var railTop=rccY-18;
+  var h='';
+
+  // Chairman to RCC rail
+  if(n===1){
+    h+='<line x1="460" y1="198" x2="'+cx(0)+'" y2="'+rccY+'" stroke="#378ADD" stroke-width="0.5"/>';
+  } else {
+    h+='<line x1="460" y1="198" x2="460" y2="'+railTop+'" stroke="#378ADD" stroke-width="0.5"/>';
+    h+='<line x1="'+cx(0)+'" y1="'+railTop+'" x2="'+cx(n-1)+'" y2="'+railTop+'" stroke="#378ADD" stroke-width="0.5" opacity="0.4"/>';
+    for(var i=0;i<n;i++)h+='<line x1="'+cx(i)+'" y1="'+railTop+'" x2="'+cx(i)+'" y2="'+rccY+'" stroke="#378ADD" stroke-width="0.5" opacity="0.4"/>';
+  }
+
+  var secDrops=[];
+  var legDrops=[];
+
+  for(var i=0;i<n;i++){
+    var ex=startX+i*colGap;
+    var ecx=cx(i);
+
+    // RCC box
+    h+='<g onclick="openPanel(\'rcc\')" style="cursor:pointer">';
+    h+='<rect x="'+ex+'" y="'+rccY+'" width="'+rccW+'" height="'+rccH+'" rx="3" fill="#0A2D50" stroke="#00C896" stroke-width="0.8"/>';
+    h+='<rect x="'+ex+'" y="'+rccY+'" width="'+rccW+'" height="3" rx="1" fill="#00C896"/>';
+    h+='<text font-family="Open Sans,sans-serif" font-size="9" fill="#E6F1FB" x="'+ecx+'" y="'+(rccY+16)+'" text-anchor="middle" dominant-baseline="central">RCC '+(i+1)+'</text>';
+    h+='<text font-family="Open Sans,sans-serif" font-size="8" fill="#85B7EB" x="'+ecx+'" y="'+(rccY+28)+'" text-anchor="middle" dominant-baseline="central">RIED + 5 CEOs</text>';
+    // Legal inside RCC
+    h+='<rect x="'+(ex+5)+'" y="'+(rccY+38)+'" width="'+(rccW-10)+'" height="22" rx="2" fill="#3A1E00" stroke="#EF9F27" stroke-width="0.5"/>';
+    h+='<text font-family="Open Sans,sans-serif" font-size="8" fill="#FAEEDA" x="'+ecx+'" y="'+(rccY+49)+'" text-anchor="middle" dominant-baseline="central">Legal Counsel</text>';
+    h+='</g>';
+    legDrops.push({x:ecx,y:rccY+60});
+
+    // Regional Sec beside RCC
+    var rsX=ex+rccW+4; var rsW=28; var rsCx=rsX+14;
+    if(rsX+rsW<svgW-2){
+      h+='<g onclick="openDrill(\'secretary\')" style="cursor:pointer">';
+      h+='<rect x="'+rsX+'" y="'+(rccY+4)+'" width="'+rsW+'" height="40" rx="3" fill="#004D3A" stroke="#00C896" stroke-width="0.5"/>';
+      h+='<text font-family="Open Sans,sans-serif" font-size="7" fill="#E1F5EE" x="'+rsCx+'" y="'+(rccY+16)+'" text-anchor="middle" dominant-baseline="central">Reg.</text>';
+      h+='<text font-family="Open Sans,sans-serif" font-size="7" fill="#E1F5EE" x="'+rsCx+'" y="'+(rccY+28)+'" text-anchor="middle" dominant-baseline="central">Sec.</text>';
+      h+='</g>';
+      h+='<line x1="'+(ex+rccW)+'" y1="'+(rccY+24)+'" x2="'+rsX+'" y2="'+(rccY+24)+'" stroke="#00C896" stroke-width="0.5" stroke-dasharray="3 2"/>';
+      secDrops.push({x:rsCx,y:rccY+44});
+    }
+
+    // RCC to entity rail
+    h+='<line x1="'+ecx+'" y1="'+(rccY+rccH)+'" x2="'+ecx+'" y2="'+(entY-5)+'" stroke="#378ADD" stroke-width="0.5" opacity="0.4"/>';
+    var totalEntW=5*entW+4*entGap;
+    var eStart=ecx-Math.round(totalEntW/2);
+    var eRailY=entY-5;
+    h+='<line x1="'+eStart+'" y1="'+eRailY+'" x2="'+(eStart+totalEntW)+'" y2="'+eRailY+'" stroke="#378ADD" stroke-width="0.5" opacity="0.3"/>';
+
+    for(var j=0;j<5;j++){
+      var eX=eStart+j*(entW+entGap);
+      var eCx=eX+Math.round(entW/2);
+      h+='<line x1="'+eCx+'" y1="'+eRailY+'" x2="'+eCx+'" y2="'+entY+'" stroke="#378ADD" stroke-width="0.5" opacity="0.3"/>';
+      // Entity
+      h+='<g onclick="openPanel(\'entity\')" style="cursor:pointer">';
+      h+='<rect x="'+eX+'" y="'+entY+'" width="'+entW+'" height="'+entH+'" rx="3" fill="#0D2645" stroke="#378ADD" stroke-width="0.5"/>';
+      h+='<rect x="'+eX+'" y="'+entY+'" width="'+entW+'" height="2" rx="1" fill="#378ADD" opacity="0.5"/>';
+      h+='<text font-family="Open Sans,sans-serif" font-size="8" fill="#E6F1FB" x="'+eCx+'" y="'+(entY+10)+'" text-anchor="middle" dominant-baseline="central">Entity</text>';
+      h+='<text font-family="Open Sans,sans-serif" font-size="7" fill="#85B7EB" x="'+eCx+'" y="'+(entY+23)+'" text-anchor="middle" dominant-baseline="central">'+(i*5+j+1)+'</text>';
+      h+='</g>';
+      h+='<line x1="'+eCx+'" y1="'+(entY+entH)+'" x2="'+eCx+'" y2="'+boardY+'" stroke="#378ADD" stroke-width="0.5" opacity="0.3"/>';
+      // Local Sec (left of board)
+      var lsX=eX-10; var lsW=9;
+      if(lsX>=0){
+        h+='<g onclick="openDrill(\'secretary\')" style="cursor:pointer">';
+        h+='<rect x="'+lsX+'" y="'+boardY+'" width="'+lsW+'" height="'+entH+'" rx="2" fill="#004D3A" stroke="#00C896" stroke-width="0.5"/>';
+        h+='</g>';
+        h+='<line x1="'+(lsX+lsW)+'" y1="'+(boardY+Math.round(entH/2))+'" x2="'+eX+'" y2="'+(boardY+Math.round(entH/2))+'" stroke="#00C896" stroke-width="0.5" stroke-dasharray="2 2" opacity="0.5"/>';
+        secDrops.push({x:lsX+4,y:boardY+entH});
+      }
+      // Local Board
+      h+='<g onclick="openPanel(\'localboard\')" style="cursor:pointer">';
+      h+='<rect x="'+eX+'" y="'+boardY+'" width="'+entW+'" height="'+entH+'" rx="3" fill="#0D2645" stroke="#378ADD" stroke-width="0.5" opacity="0.8"/>';
+      h+='<text font-family="Open Sans,sans-serif" font-size="8" fill="#E6F1FB" x="'+eCx+'" y="'+(boardY+16)+'" text-anchor="middle" dominant-baseline="central">Board</text>';
+      h+='</g>';
+      // Local Exec
+      h+='<line x1="'+eCx+'" y1="'+(boardY+entH)+'" x2="'+eCx+'" y2="'+execY+'" stroke="#378ADD" stroke-width="0.5" opacity="0.3"/>';
+      h+='<g onclick="openPanel(\'localexec\')" style="cursor:pointer">';
+      h+='<rect x="'+eX+'" y="'+execY+'" width="'+entW+'" height="'+entH+'" rx="3" fill="#061528" stroke="#378ADD" stroke-width="0.5"/>';
+      h+='<text font-family="Open Sans,sans-serif" font-size="7" fill="#85B7EB" x="'+eCx+'" y="'+(execY+16)+'" text-anchor="middle" dominant-baseline="central">Exec.</text>';
+      h+='</g>';
+      // Local Legal
+      var llX=eX-10;
+      if(llX>=0){
+        h+='<g onclick="openDrill(\'clc\')" style="cursor:pointer">';
+        h+='<rect x="'+llX+'" y="'+execY+'" width="'+lsW+'" height="'+entH+'" rx="2" fill="#3A1E00" stroke="#EF9F27" stroke-width="0.5"/>';
+        h+='</g>';
+        legDrops.push({x:llX+4,y:execY+entH});
+      }
+    }
+  }
+
+  // ═══ SECRETARIAT RAIL ═══
+  // Local Secs → Regional Secs (shown in drill) → Group Secretariat
+  // On main diagram: show single teal rail with label
+  if(secDrops.length>0){
+    var gsX=126; var gsY=110;
+    var minSX=Math.min.apply(null,secDrops.map(p=>p.x));
+    var maxSX=Math.max.apply(null,secDrops.map(p=>p.x));
+    secDrops.forEach(p=>{h+='<line x1="'+p.x+'" y1="'+p.y+'" x2="'+p.x+'" y2="'+secRailY+'" stroke="#00C896" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.4"/>';});
+    h+='<line x1="'+Math.min(minSX,gsX)+'" y1="'+secRailY+'" x2="'+Math.max(maxSX,gsX)+'" y2="'+secRailY+'" stroke="#00C896" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.4"/>';
+    h+='<line x1="'+gsX+'" y1="'+gsY+'" x2="'+gsX+'" y2="'+secRailY+'" stroke="#00C896" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.4"/>';
+    h+='<text font-family="Open Sans,sans-serif" font-size="8" fill="#00C896" x="'+Math.round((Math.min(minSX,gsX)+Math.max(maxSX,gsX))/2)+'" y="'+(secRailY+13)+'" text-anchor="middle" opacity="0.55">Local Sec → Regional Sec → Group Secretariat</text>';
+  }
+
+  // ═══ LEGAL RAIL ═══
+  if(legDrops.length>0){
+    var clcX=559; var clcY=98;
+    var minLX=Math.min.apply(null,legDrops.map(p=>p.x));
+    var maxLX=Math.max.apply(null,legDrops.map(p=>p.x));
+    legDrops.forEach(p=>{h+='<line x1="'+p.x+'" y1="'+p.y+'" x2="'+p.x+'" y2="'+legRailY+'" stroke="#EF9F27" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.3"/>';});
+    h+='<line x1="'+Math.min(minLX,clcX)+'" y1="'+legRailY+'" x2="'+Math.max(maxLX,clcX)+'" y2="'+legRailY+'" stroke="#EF9F27" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.3"/>';
+    h+='<line x1="'+clcX+'" y1="'+clcY+'" x2="'+clcX+'" y2="'+legRailY+'" stroke="#EF9F27" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.3"/>';
+    h+='<text font-family="Open Sans,sans-serif" font-size="8" fill="#EF9F27" x="'+Math.round((Math.min(minLX,clcX)+Math.max(maxLX,clcX))/2)+'" y="'+(legRailY+13)+'" text-anchor="middle" opacity="0.45">Local Legal → Regional Legal Counsel → Chief Legal Counsel</text>';
+  }
+
+  document.getElementById('dyn').innerHTML=h;
+
+  // Update facts
+  var deps=clcDeps(n);
+  var officers=secOfficers(n);
+  document.getElementById('cnt').textContent=n;
+  document.getElementById('f-ent').textContent=n*5;
+  document.getElementById('f-leg').textContent=n;
+  document.getElementById('f-rs').textContent=n;
+  document.getElementById('f-dep').textContent=deps;
+  document.getElementById('f-sec').textContent='GS + 2 deputies'+(officers>0?' + '+officers+' officer'+(officers>1?'s':''):'');
+}
+
+document.getElementById('slider').addEventListener('input',function(){render(parseInt(this.value));});
+render(2);
+</script>
+</body>
+</html>

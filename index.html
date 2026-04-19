@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ALX Africa — Governance Structure (Pre-Expansion)</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #061528;
+  --bg2:       #0A1F3A;
+  --bg3:       #0D2645;
+  --navy:      #042C53;
+  --blue:      #0C447C;
+  --blue-mid:  #185FA5;
+  --blue-lt:   #378ADD;
+  --blue-pale: #B5D4F4;
+  --teal:      #00C896;
+  --teal-mid:  #00A876;
+  --teal-dk:   #007A55;
+  --teal-pale: #C8F5E8;
+  --amber:     #EF9F27;
+  --amber-dk:  #BA7517;
+  --amber-pale:#FAEEDA;
+  --coral:     #F0997B;
+  --white:     #FFFFFF;
+  --text-dim:  rgba(255,255,255,0.45);
+  --text-mid:  rgba(255,255,255,0.7);
+  --border:    rgba(255,255,255,0.08);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Open Sans',sans-serif;background:var(--bg);color:var(--white);min-height:100vh;overflow-x:hidden;}
+
+/* Geometric background decoration */
+body::before{
+  content:'';position:fixed;top:-100px;right:-100px;width:400px;height:400px;
+  border:2px solid rgba(0,200,150,0.08);transform:rotate(15deg);pointer-events:none;
+}
+body::after{
+  content:'';position:fixed;bottom:-80px;left:-80px;width:300px;height:300px;
+  border:2px solid rgba(0,200,150,0.06);transform:rotate(30deg);pointer-events:none;
+}
+
+/* HEADER */
+.header{
+  padding:40px 56px 28px;
+  background:linear-gradient(135deg,rgba(12,68,124,0.4) 0%,transparent 70%);
+  border-bottom:1px solid var(--border);
+  position:relative;overflow:hidden;
+}
+.header-chevrons{
+  position:absolute;top:0;right:0;width:180px;height:180px;opacity:0.12;
+  background:
+    linear-gradient(135deg,transparent 40%,var(--teal) 40%,var(--teal) 42%,transparent 42%),
+    linear-gradient(135deg,transparent 50%,var(--teal) 50%,var(--teal) 52%,transparent 52%),
+    linear-gradient(135deg,transparent 60%,var(--teal) 60%,var(--teal) 62%,transparent 62%);
+}
+.alx-tag{
+  font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;
+  letter-spacing:3px;text-transform:uppercase;color:var(--teal);
+  margin-bottom:10px;display:flex;align-items:center;gap:10px;
+}
+.alx-tag::before{content:'';width:28px;height:2px;background:var(--teal);}
+.header h1{
+  font-family:'Montserrat',sans-serif;font-size:32px;font-weight:800;
+  line-height:1.15;margin-bottom:10px;
+}
+.header h1 em{color:var(--teal);font-style:normal;}
+.header-desc{
+  font-size:13px;font-weight:300;color:var(--text-mid);
+  max-width:600px;line-height:1.75;margin-bottom:18px;
+}
+.pills{display:flex;gap:10px;flex-wrap:wrap;}
+.pill{
+  font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;
+  letter-spacing:1px;padding:5px 14px;border-radius:3px;
+  border:1px solid;text-transform:uppercase;
+}
+.pill-teal{border-color:rgba(0,200,150,0.4);color:var(--teal);background:rgba(0,200,150,0.06);}
+.pill-blue{border-color:rgba(55,138,221,0.4);color:var(--blue-lt);background:rgba(55,138,221,0.06);}
+.pill-amber{border-color:rgba(239,159,39,0.4);color:var(--amber);background:rgba(239,159,39,0.06);}
+.pill-dim{border-color:rgba(255,255,255,0.15);color:var(--text-dim);}
+
+/* HINT BAR */
+.hint{
+  text-align:center;font-family:'Montserrat',sans-serif;font-size:9px;
+  letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);
+  padding:10px;border-bottom:1px solid var(--border);
+}
+
+/* CANVAS */
+.canvas{padding:24px 32px 40px;overflow-x:auto;}
+.svg-wrap{width:100%;min-width:820px;}
+
+/* LEGEND */
+.legend{
+  display:flex;gap:24px;flex-wrap:wrap;
+  padding:14px 32px;border-top:1px solid var(--border);
+}
+.leg{display:flex;align-items:center;gap:8px;font-size:10px;color:var(--text-dim);}
+.leg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0;}
+.leg-line{width:20px;height:1px;border-top:1px dashed;flex-shrink:0;}
+
+/* OVERLAY PANEL */
+.overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(4,20,44,0.82);backdrop-filter:blur(6px);
+  z-index:500;align-items:center;justify-content:center;padding:20px;
+}
+.overlay.open{display:flex;}
+.panel{
+  background:var(--bg2);
+  border:1px solid rgba(0,200,150,0.2);
+  border-top:3px solid var(--teal);
+  border-radius:4px;padding:30px 32px;
+  max-width:540px;width:100%;position:relative;
+  animation:slideUp .2s ease;
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.panel-close{
+  position:absolute;top:14px;right:14px;
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  color:var(--text-dim);width:28px;height:28px;border-radius:2px;
+  cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;
+  transition:all .15s;
+}
+.panel-close:hover{background:rgba(255,255,255,0.12);color:var(--white);}
+.panel-badge{
+  font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;padding:3px 10px;
+  border-radius:2px;margin-bottom:12px;display:inline-block;
+}
+.pb-teal{background:rgba(0,200,150,0.12);color:var(--teal);border:1px solid rgba(0,200,150,0.25);}
+.pb-blue{background:rgba(55,138,221,0.12);color:var(--blue-lt);border:1px solid rgba(55,138,221,0.25);}
+.pb-amber{background:rgba(239,159,39,0.12);color:var(--amber);border:1px solid rgba(239,159,39,0.25);}
+.pb-coral{background:rgba(240,153,123,0.12);color:var(--coral);border:1px solid rgba(240,153,123,0.25);}
+.pb-dim{background:rgba(255,255,255,0.06);color:var(--text-mid);border:1px solid rgba(255,255,255,0.12);}
+.panel h2{font-family:'Montserrat',sans-serif;font-size:18px;font-weight:700;margin-bottom:10px;}
+.panel p{font-size:13px;color:var(--text-mid);line-height:1.7;margin-bottom:12px;}
+.panel ul{list-style:none;padding:0;}
+.panel ul li{
+  font-size:12px;color:var(--text-dim);padding:6px 0 6px 14px;
+  border-bottom:1px solid var(--border);line-height:1.5;position:relative;
+}
+.panel ul li::before{content:'—';position:absolute;left:0;color:rgba(0,200,150,0.4);font-size:10px;}
+.panel ul li:last-child{border-bottom:none;}
+.panel ul li strong{color:var(--text-mid);font-weight:600;}
+
+/* DRILL SCREEN */
+.drill{
+  display:none;position:fixed;inset:0;background:var(--bg);
+  z-index:600;overflow-y:auto;padding:40px 48px;
+  animation:fadeIn .2s ease;
+}
+.drill.open{display:block;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.drill-back{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;
+  letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);
+  background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);
+  padding:8px 16px;border-radius:3px;cursor:pointer;margin-bottom:28px;
+  transition:all .15s;
+}
+.drill-back:hover{background:rgba(255,255,255,0.08);color:var(--white);}
+.drill-title{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:800;margin-bottom:4px;}
+.drill-sub{font-size:12px;color:var(--text-dim);margin-bottom:28px;}
+.drill-wrap{width:100%;overflow-x:auto;}
+</style>
+</head>
+<body>
+
+<!-- GEOMETRIC ACCENT -->
+<div style="position:fixed;top:0;right:0;width:220px;height:220px;pointer-events:none;opacity:0.07;overflow:hidden;">
+  <svg width="220" height="220" viewBox="0 0 220 220">
+    <polyline points="180,20 220,60 180,100" fill="none" stroke="#00C896" stroke-width="2"/>
+    <polyline points="160,20 200,60 160,100" fill="none" stroke="#00C896" stroke-width="2"/>
+    <polyline points="140,20 180,60 140,100" fill="none" stroke="#00C896" stroke-width="2"/>
+  </svg>
+</div>
+<div style="position:fixed;bottom:0;left:0;width:160px;height:160px;pointer-events:none;opacity:0.05;overflow:hidden;">
+  <svg width="160" height="160" viewBox="0 0 160 160">
+    <polyline points="20,140 60,100 20,60" fill="none" stroke="#00C896" stroke-width="2"/>
+    <polyline points="40,140 80,100 40,60" fill="none" stroke="#00C896" stroke-width="2"/>
+  </svg>
+</div>
+
+<div class="header">
+  <div class="alx-tag">ALX Africa · Governance Framework</div>
+  <h1>Governance Structure<br><em>Pre-Expansion</em></h1>
+  <p class="header-desc">The governance architecture covering eight legal entities across five countries at USD 10 million revenue. This structure establishes the foundational governance spine before planned expansion into eleven additional markets.</p>
+  <div class="pills">
+    <span class="pill pill-teal">5 Entities · Current Structure</span>
+    <span class="pill pill-blue">Group Secretary · Direct to Board</span>
+    <span class="pill pill-amber">Chief Legal Counsel · Board Member</span>
+    <span class="pill pill-dim">Click any node for details</span>
+  </div>
+</div>
+
+<div class="hint">↓ &nbsp; Click any node to explore &nbsp;·&nbsp; Click Group Secretary or Chief Legal Counsel to see internal structure</div>
+
+<div class="canvas">
+<div class="svg-wrap">
+<svg id="svg-main" width="100%" viewBox="0 0 960 620" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+</defs>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- GROUP BOARD CONTAINER -->
+<!-- ═══════════════════════════════════════════ -->
+<!-- Board header (clickable) -->
+<g onclick="openPanel('board')" style="cursor:pointer">
+  <rect x="250" y="18" width="440" height="30" rx="3" fill="#0C447C" stroke="#00C896" stroke-width="0.8"/>
+  <text font-family="Montserrat,sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" x="470" y="33" text-anchor="middle" dominant-baseline="central" letter-spacing="1">Group Board</text>
+</g>
+<!-- Board body -->
+<rect x="250" y="48" width="440" height="66" rx="0" fill="#0A2D50" stroke="#0C447C" stroke-width="0.5"/>
+<rect x="250" y="18" width="440" height="96" rx="3" fill="none" stroke="#0C447C" stroke-width="0.8"/>
+
+<!-- Statutory Committees (left half inside board) -->
+<g onclick="openPanel('committees')" style="cursor:pointer">
+  <rect x="264" y="56" width="190" height="42" rx="3" fill="#0C447C" stroke="#378ADD" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="10" fill="#E6F1FB" x="359" y="72" text-anchor="middle" dominant-baseline="central">Statutory Board Committees</text>
+  <text font-family="Open Sans,sans-serif" font-size="9" fill="#85B7EB" x="359" y="88" text-anchor="middle" dominant-baseline="central">Audit &amp; Risk · Nominations</text>
+</g>
+
+<!-- Chief Legal Counsel (right half inside board) -->
+<g onclick="openDrill('clc')" style="cursor:pointer">
+  <rect x="464" y="56" width="210" height="42" rx="3" fill="#6B3800" stroke="#EF9F27" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="10" fill="#FAEEDA" x="569" y="72" text-anchor="middle" dominant-baseline="central">Chief Legal Counsel</text>
+  <text font-family="Open Sans,sans-serif" font-size="9" fill="#FAC775" x="569" y="88" text-anchor="middle" dominant-baseline="central">Board member · no deputies pre-expansion · ↓</text>
+</g>
+
+<!-- Advisory Council (right of board) -->
+<g onclick="openPanel('advisory')" style="cursor:pointer">
+  <rect x="748" y="40" width="120" height="54" rx="3" fill="#0D2645" stroke="#378ADD" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="10" fill="#E6F1FB" x="808" y="58" text-anchor="middle" dominant-baseline="central">Advisory</text>
+  <text font-family="Open Sans,sans-serif" font-size="10" fill="#E6F1FB" x="808" y="73" text-anchor="middle" dominant-baseline="central">Council ×3</text>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#85B7EB" x="808" y="87" text-anchor="middle" dominant-baseline="central">non-fiduciary</text>
+</g>
+<line x1="690" y1="67" x2="748" y2="67" stroke="#378ADD" stroke-width="0.5"/>
+
+<!-- Group Secretary (left of board, assists) -->
+<g onclick="openDrill('secretary')" style="cursor:pointer">
+  <rect x="72" y="40" width="128" height="72" rx="3" fill="#004D3A" stroke="#00C896" stroke-width="0.8"/>
+  <!-- teal accent bar -->
+  <rect x="72" y="40" width="4" height="72" rx="2" fill="#00C896"/>
+  <text font-family="Open Sans,sans-serif" font-size="10" fill="#E1F5EE" x="142" y="64" text-anchor="middle" dominant-baseline="central">Group Secretary</text>
+  <text font-family="Open Sans,sans-serif" font-size="9" fill="#00C896" x="142" y="81" text-anchor="middle" dominant-baseline="central">reports to Board</text>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="rgba(0,200,150,0.6)" x="142" y="97" text-anchor="middle" dominant-baseline="central">click to expand ↓</text>
+</g>
+<!-- assists line -->
+<line x1="200" y1="76" x2="250" y2="76" stroke="#00C896" stroke-width="0.5" stroke-dasharray="5 3"/>
+<text font-family="Open Sans,sans-serif" font-size="8" fill="#00A876" x="225" y="70" text-anchor="middle">assists</text>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- EXECUTIVE CHAIRMAN -->
+<!-- ═══════════════════════════════════════════ -->
+<line x1="470" y1="114" x2="470" y2="142" stroke="#00C896" stroke-width="0.8"/>
+<g onclick="openPanel('chairman')" style="cursor:pointer">
+  <rect x="330" y="142" width="280" height="36" rx="3" fill="#042C53" stroke="#00C896" stroke-width="0.8"/>
+  <rect x="330" y="142" width="4" height="36" rx="2" fill="#00C896"/>
+  <text font-family="Montserrat,sans-serif" font-size="11" font-weight="700" fill="#FFFFFF" x="470" y="160" text-anchor="middle" dominant-baseline="central" letter-spacing="0.5">Executive Chairman</text>
+</g>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- COORDINATING TEAM -->
+<!-- ═══════════════════════════════════════════ -->
+<line x1="470" y1="178" x2="470" y2="206" stroke="#378ADD" stroke-width="0.5"/>
+<g onclick="openPanel('coordteam')" style="cursor:pointer">
+  <rect x="348" y="206" width="244" height="36" rx="3" fill="#0A2D50" stroke="#378ADD" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="10" fill="#E6F1FB" x="470" y="224" text-anchor="middle" dominant-baseline="central">Coordinating Team</text>
+</g>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- ENTITY RAIL -->
+<!-- ═══════════════════════════════════════════ -->
+<line x1="470" y1="242" x2="470" y2="264" stroke="#378ADD" stroke-width="0.5" opacity="0.6"/>
+<line x1="88" y1="264" x2="852" y2="264" stroke="#378ADD" stroke-width="0.5" opacity="0.3"/>
+<line x1="88"  y1="264" x2="88"  y2="284" stroke="#378ADD" stroke-width="0.5" opacity="0.3"/>
+<line x1="278" y1="264" x2="278" y2="284" stroke="#378ADD" stroke-width="0.5" opacity="0.3"/>
+<line x1="470" y1="264" x2="470" y2="284" stroke="#378ADD" stroke-width="0.5" opacity="0.3"/>
+<line x1="662" y1="264" x2="662" y2="284" stroke="#378ADD" stroke-width="0.5" opacity="0.3"/>
+<line x1="852" y1="264" x2="852" y2="284" stroke="#378ADD" stroke-width="0.5" opacity="0.3"/>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- ENTITY COLUMNS (5) -->
+<!-- cx positions: 88, 278, 470, 662, 852 -->
+<!-- ═══════════════════════════════════════════ -->
+
+<!-- Helper: for each entity cx, draw entity box + board/sec/exec below -->
+<!-- ENTITY 1 cx=88 -->
+<g onclick="openPanel('entity')" style="cursor:pointer">
+  <rect x="52" y="284" width="72" height="42" rx="3" fill="#0D2645" stroke="#378ADD" stroke-width="0.5"/>
+  <rect x="52" y="284" width="72" height="3" rx="1" fill="#378ADD"/>
+  <text font-family="Open Sans,sans-serif" font-size="9" fill="#E6F1FB" x="88" y="301" text-anchor="middle" dominant-baseline="central">Local Entity</text>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#85B7EB" x="88" y="316" text-anchor="middle" dominant-baseline="central">1</text>
+</g>
+<line x1="88" y1="326" x2="88" y2="344" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<line x1="50" y1="344" x2="126" y2="344" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<line x1="50"  y1="344" x2="50"  y2="360" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<line x1="126" y1="344" x2="126" y2="360" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<!-- Local Sec -->
+<g onclick="openDrill('secretary')" style="cursor:pointer">
+  <rect x="28" y="360" width="34" height="44" rx="3" fill="#004D3A" stroke="#00C896" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#E1F5EE" x="45" y="376" text-anchor="middle" dominant-baseline="central">Loc.</text>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#E1F5EE" x="45" y="390" text-anchor="middle" dominant-baseline="central">Sec.</text>
+</g>
+<!-- Local Board -->
+<g onclick="openPanel('localboard')" style="cursor:pointer">
+  <rect x="68" y="360" width="56" height="44" rx="3" fill="#0D2645" stroke="#378ADD" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="9" fill="#E6F1FB" x="96" y="376" text-anchor="middle" dominant-baseline="central">Local</text>
+  <text font-family="Open Sans,sans-serif" font-size="9" fill="#E6F1FB" x="96" y="390" text-anchor="middle" dominant-baseline="central">Board</text>
+</g>
+<line x1="96" y1="404" x2="96" y2="420" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<!-- Local Exec -->
+<g onclick="openPanel('localexec')" style="cursor:pointer">
+  <rect x="68" y="420" width="56" height="32" rx="3" fill="#061528" stroke="#378ADD" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#85B7EB" x="96" y="436" text-anchor="middle" dominant-baseline="central">Local Exec.</text>
+</g>
+<!-- Local Legal -->
+<g onclick="openDrill('clc')" style="cursor:pointer">
+  <rect x="28" y="420" width="34" height="32" rx="3" fill="#3A1E00" stroke="#EF9F27" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="7" fill="#FAEEDA" x="45" y="436" text-anchor="middle" dominant-baseline="central">Legal</text>
+</g>
+
+<!-- ENTITY 2 cx=278 -->
+<g onclick="openPanel('entity')" style="cursor:pointer">
+  <rect x="242" y="284" width="72" height="42" rx="3" fill="#0D2645" stroke="#378ADD" stroke-width="0.5"/>
+  <rect x="242" y="284" width="72" height="3" rx="1" fill="#378ADD"/>
+  <text font-family="Open Sans,sans-serif" font-size="9" fill="#E6F1FB" x="278" y="301" text-anchor="middle" dominant-baseline="central">Local Entity</text>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#85B7EB" x="278" y="316" text-anchor="middle" dominant-baseline="central">2</text>
+</g>
+<line x1="278" y1="326" x2="278" y2="344" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<line x1="240" y1="344" x2="316" y2="344" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<line x1="240" y1="344" x2="240" y2="360" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<line x1="316" y1="344" x2="316" y2="360" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<g onclick="openDrill('secretary')" style="cursor:pointer">
+  <rect x="218" y="360" width="34" height="44" rx="3" fill="#004D3A" stroke="#00C896" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#E1F5EE" x="235" y="376" text-anchor="middle" dominant-baseline="central">Loc.</text>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#E1F5EE" x="235" y="390" text-anchor="middle" dominant-baseline="central">Sec.</text>
+</g>
+<g onclick="openPanel('localboard')" style="cursor:pointer">
+  <rect x="258" y="360" width="56" height="44" rx="3" fill="#0D2645" stroke="#378ADD" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="9" fill="#E6F1FB" x="286" y="376" text-anchor="middle" dominant-baseline="central">Local</text>
+  <text font-family="Open Sans,sans-serif" font-size="9" fill="#E6F1FB" x="286" y="390" text-anchor="middle" dominant-baseline="central">Board</text>
+</g>
+<line x1="286" y1="404" x2="286" y2="420" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<g onclick="openPanel('localexec')" style="cursor:pointer">
+  <rect x="258" y="420" width="56" height="32" rx="3" fill="#061528" stroke="#378ADD" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#85B7EB" x="286" y="436" text-anchor="middle" dominant-baseline="central">Local Exec.</text>
+</g>
+<g onclick="openDrill('clc')" style="cursor:pointer">
+  <rect x="218" y="420" width="34" height="32" rx="3" fill="#3A1E00" stroke="#EF9F27" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="7" fill="#FAEEDA" x="235" y="436" text-anchor="middle" dominant-baseline="central">Legal</text>
+</g>
+
+<!-- ENTITY 3 cx=470 -->
+<g onclick="openPanel('entity')" style="cursor:pointer">
+  <rect x="434" y="284" width="72" height="42" rx="3" fill="#0D2645" stroke="#378ADD" stroke-width="0.5"/>
+  <rect x="434" y="284" width="72" height="3" rx="1" fill="#378ADD"/>
+  <text font-family="Open Sans,sans-serif" font-size="9" fill="#E6F1FB" x="470" y="301" text-anchor="middle" dominant-baseline="central">Local Entity</text>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#85B7EB" x="470" y="316" text-anchor="middle" dominant-baseline="central">3</text>
+</g>
+<line x1="470" y1="326" x2="470" y2="344" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<line x1="432" y1="344" x2="508" y2="344" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<line x1="432" y1="344" x2="432" y2="360" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<line x1="508" y1="344" x2="508" y2="360" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<g onclick="openDrill('secretary')" style="cursor:pointer">
+  <rect x="410" y="360" width="34" height="44" rx="3" fill="#004D3A" stroke="#00C896" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#E1F5EE" x="427" y="376" text-anchor="middle" dominant-baseline="central">Loc.</text>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#E1F5EE" x="427" y="390" text-anchor="middle" dominant-baseline="central">Sec.</text>
+</g>
+<g onclick="openPanel('localboard')" style="cursor:pointer">
+  <rect x="450" y="360" width="56" height="44" rx="3" fill="#0D2645" stroke="#378ADD" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="9" fill="#E6F1FB" x="478" y="376" text-anchor="middle" dominant-baseline="central">Local</text>
+  <text font-family="Open Sans,sans-serif" font-size="9" fill="#E6F1FB" x="478" y="390" text-anchor="middle" dominant-baseline="central">Board</text>
+</g>
+<line x1="478" y1="404" x2="478" y2="420" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<g onclick="openPanel('localexec')" style="cursor:pointer">
+  <rect x="450" y="420" width="56" height="32" rx="3" fill="#061528" stroke="#378ADD" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#85B7EB" x="478" y="436" text-anchor="middle" dominant-baseline="central">Local Exec.</text>
+</g>
+<g onclick="openDrill('clc')" style="cursor:pointer">
+  <rect x="410" y="420" width="34" height="32" rx="3" fill="#3A1E00" stroke="#EF9F27" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="7" fill="#FAEEDA" x="427" y="436" text-anchor="middle" dominant-baseline="central">Legal</text>
+</g>
+
+<!-- ENTITY 4 cx=662 -->
+<g onclick="openPanel('entity')" style="cursor:pointer">
+  <rect x="626" y="284" width="72" height="42" rx="3" fill="#0D2645" stroke="#378ADD" stroke-width="0.5"/>
+  <rect x="626" y="284" width="72" height="3" rx="1" fill="#378ADD"/>
+  <text font-family="Open Sans,sans-serif" font-size="9" fill="#E6F1FB" x="662" y="301" text-anchor="middle" dominant-baseline="central">Local Entity</text>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#85B7EB" x="662" y="316" text-anchor="middle" dominant-baseline="central">4</text>
+</g>
+<line x1="662" y1="326" x2="662" y2="344" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<line x1="624" y1="344" x2="700" y2="344" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<line x1="624" y1="344" x2="624" y2="360" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<line x1="700" y1="344" x2="700" y2="360" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<g onclick="openDrill('secretary')" style="cursor:pointer">
+  <rect x="602" y="360" width="34" height="44" rx="3" fill="#004D3A" stroke="#00C896" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#E1F5EE" x="619" y="376" text-anchor="middle" dominant-baseline="central">Loc.</text>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#E1F5EE" x="619" y="390" text-anchor="middle" dominant-baseline="central">Sec.</text>
+</g>
+<g onclick="openPanel('localboard')" style="cursor:pointer">
+  <rect x="642" y="360" width="56" height="44" rx="3" fill="#0D2645" stroke="#378ADD" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="9" fill="#E6F1FB" x="670" y="376" text-anchor="middle" dominant-baseline="central">Local</text>
+  <text font-family="Open Sans,sans-serif" font-size="9" fill="#E6F1FB" x="670" y="390" text-anchor="middle" dominant-baseline="central">Board</text>
+</g>
+<line x1="670" y1="404" x2="670" y2="420" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<g onclick="openPanel('localexec')" style="cursor:pointer">
+  <rect x="642" y="420" width="56" height="32" rx="3" fill="#061528" stroke="#378ADD" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#85B7EB" x="670" y="436" text-anchor="middle" dominant-baseline="central">Local Exec.</text>
+</g>
+<g onclick="openDrill('clc')" style="cursor:pointer">
+  <rect x="602" y="420" width="34" height="32" rx="3" fill="#3A1E00" stroke="#EF9F27" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="7" fill="#FAEEDA" x="619" y="436" text-anchor="middle" dominant-baseline="central">Legal</text>
+</g>
+
+<!-- ENTITY 5 cx=852 -->
+<g onclick="openPanel('entity')" style="cursor:pointer">
+  <rect x="816" y="284" width="72" height="42" rx="3" fill="#0D2645" stroke="#378ADD" stroke-width="0.5"/>
+  <rect x="816" y="284" width="72" height="3" rx="1" fill="#378ADD"/>
+  <text font-family="Open Sans,sans-serif" font-size="9" fill="#E6F1FB" x="852" y="301" text-anchor="middle" dominant-baseline="central">Local Entity</text>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#85B7EB" x="852" y="316" text-anchor="middle" dominant-baseline="central">5</text>
+</g>
+<line x1="852" y1="326" x2="852" y2="344" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<line x1="814" y1="344" x2="890" y2="344" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<line x1="814" y1="344" x2="814" y2="360" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<line x1="890" y1="344" x2="890" y2="360" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<g onclick="openDrill('secretary')" style="cursor:pointer">
+  <rect x="792" y="360" width="34" height="44" rx="3" fill="#004D3A" stroke="#00C896" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#E1F5EE" x="809" y="376" text-anchor="middle" dominant-baseline="central">Loc.</text>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#E1F5EE" x="809" y="390" text-anchor="middle" dominant-baseline="central">Sec.</text>
+</g>
+<g onclick="openPanel('localboard')" style="cursor:pointer">
+  <rect x="832" y="360" width="56" height="44" rx="3" fill="#0D2645" stroke="#378ADD" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="9" fill="#E6F1FB" x="860" y="376" text-anchor="middle" dominant-baseline="central">Local</text>
+  <text font-family="Open Sans,sans-serif" font-size="9" fill="#E6F1FB" x="860" y="390" text-anchor="middle" dominant-baseline="central">Board</text>
+</g>
+<line x1="860" y1="404" x2="860" y2="420" stroke="#378ADD" stroke-width="0.5" opacity="0.5"/>
+<g onclick="openPanel('localexec')" style="cursor:pointer">
+  <rect x="832" y="420" width="56" height="32" rx="3" fill="#061528" stroke="#378ADD" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="8" fill="#85B7EB" x="860" y="436" text-anchor="middle" dominant-baseline="central">Local Exec.</text>
+</g>
+<g onclick="openDrill('clc')" style="cursor:pointer">
+  <rect x="792" y="420" width="34" height="32" rx="3" fill="#3A1E00" stroke="#EF9F27" stroke-width="0.5"/>
+  <text font-family="Open Sans,sans-serif" font-size="7" fill="#FAEEDA" x="809" y="436" text-anchor="middle" dominant-baseline="central">Legal</text>
+</g>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- SECRETARIAT REPORTING RAIL (teal dashed) -->
+<!-- All Local Secs → Group Secretary (direct, no intermediate) -->
+<!-- ═══════════════════════════════════════════ -->
+<line x1="45"  y1="404" x2="45"  y2="500" stroke="#00C896" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.5"/>
+<line x1="235" y1="404" x2="235" y2="500" stroke="#00C896" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.5"/>
+<line x1="427" y1="404" x2="427" y2="500" stroke="#00C896" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.5"/>
+<line x1="619" y1="404" x2="619" y2="500" stroke="#00C896" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.5"/>
+<line x1="809" y1="404" x2="809" y2="500" stroke="#00C896" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.5"/>
+<line x1="45" y1="500" x2="809" y2="500" stroke="#00C896" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.5"/>
+<line x1="136" y1="112" x2="136" y2="500" stroke="#00C896" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.5"/>
+<text font-family="Open Sans,sans-serif" font-size="8" fill="#00C896" x="480" y="516" text-anchor="middle" opacity="0.6">Local Secretaries report directly to Group Secretary (pre-expansion — no intermediate tier)</text>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- LEGAL REPORTING RAIL (amber dashed) -->
+<!-- All Local Legal Counsels → CLC (direct) -->
+<!-- ═══════════════════════════════════════════ -->
+<line x1="45"  y1="452" x2="45"  y2="548" stroke="#EF9F27" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.35"/>
+<line x1="235" y1="452" x2="235" y2="548" stroke="#EF9F27" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.35"/>
+<line x1="427" y1="452" x2="427" y2="548" stroke="#EF9F27" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.35"/>
+<line x1="619" y1="452" x2="619" y2="548" stroke="#EF9F27" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.35"/>
+<line x1="809" y1="452" x2="809" y2="548" stroke="#EF9F27" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.35"/>
+<line x1="45" y1="548" x2="809" y2="548" stroke="#EF9F27" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.35"/>
+<line x1="569" y1="98" x2="569" y2="548" stroke="#EF9F27" stroke-width="0.5" stroke-dasharray="3 3" opacity="0.35"/>
+<text font-family="Open Sans,sans-serif" font-size="8" fill="#EF9F27" x="480" y="562" text-anchor="middle" opacity="0.5">Local Legal Counsels report directly to Chief Legal Counsel (pre-expansion — no intermediate tier)</text>
+
+</svg>
+</div>
+</div>
+
+<div class="legend">
+  <div class="leg"><div class="leg-dot" style="background:#0C447C;border:1px solid #378ADD"></div>Statutory / fiduciary</div>
+  <div class="leg"><div class="leg-dot" style="background:#004D3A;border:1px solid #00C896"></div>Secretariat</div>
+  <div class="leg"><div class="leg-dot" style="background:#3A1E00;border:1px solid #EF9F27"></div>Legal</div>
+  <div class="leg"><div class="leg-dot" style="background:#0D2645;border:1px solid #378ADD"></div>Entity level</div>
+  <div class="leg"><div class="leg-line" style="border-color:#00C896"></div>Secretariat reporting</div>
+  <div class="leg"><div class="leg-line" style="border-color:#EF9F27"></div>Legal reporting</div>
+</div>
+
+<!-- PANEL OVERLAY -->
+<div class="overlay" id="overlay" onclick="closeOverlay(event)">
+  <div class="panel">
+    <button class="panel-close" onclick="closePanels()">✕</button>
+    <div id="p-badge" class="panel-badge"></div>
+    <h2 id="p-title"></h2>
+    <p id="p-desc"></p>
+    <ul id="p-list"></ul>
+  </div>
+</div>
+
+<!-- SECRETARY DRILL -->
+<div class="drill" id="drill-secretary">
+  <button class="drill-back" onclick="closeDrill('secretary')">← Back to full structure</button>
+  <div class="drill-title">Group Secretariat</div>
+  <div class="drill-sub">Pre-expansion · Group Secretary reports directly to Group Board · No deputies · 5 Local Secretaries report directly</div>
+  <div class="drill-wrap">
+  <svg width="100%" viewBox="0 0 960 300" xmlns="http://www.w3.org/2000/svg">
+    <!-- Group Secretary -->
+    <rect x="356" y="20" width="248" height="52" rx="3" fill="#004D3A" stroke="#00C896" stroke-width="0.8"/>
+    <rect x="356" y="20" width="4" height="52" rx="2" fill="#00C896"/>
+    <text font-family="Montserrat,sans-serif" font-size="13" font-weight="700" fill="#E1F5EE" x="480" y="40" text-anchor="middle" dominant-baseline="central">Group Secretary</text>
+    <text font-family="Open Sans,sans-serif" font-size="10" fill="#00C896" x="480" y="58" text-anchor="middle" dominant-baseline="central">Reports directly to Group Board · no deputies pre-expansion</text>
+    <!-- Direct line down to local secs -->
+    <line x1="480" y1="72" x2="480" y2="100" stroke="#00C896" stroke-width="0.5" stroke-dasharray="4 3"/>
+    <line x1="88" y1="100" x2="872" y2="100" stroke="#00C896" stroke-width="0.5" stroke-dasharray="4 3"/>
+    <line x1="88"  y1="100" x2="88"  y2="116" stroke="#00C896" stroke-width="0.5" stroke-dasharray="4 3"/>
+    <line x1="278" y1="100" x2="278" y2="116" stroke="#00C896" stroke-width="0.5" stroke-dasharray="4 3"/>
+    <line x1="480" y1="100" x2="480" y2="116" stroke="#00C896" stroke-width="0.5" stroke-dasharray="4 3"/>
+    <line x1="672" y1="100" x2="672" y2="116" stroke="#00C896" stroke-width="0.5" stroke-dasharray="4 3"/>
+    <line x1="872" y1="100" x2="872" y2="116" stroke="#00C896" stroke-width="0.5" stroke-dasharray="4 3"/>
+    <text font-family="Open Sans,sans-serif" font-size="9" fill="#00C896" x="480" y="98" text-anchor="middle" opacity="0.7">direct reporting — no intermediate tier pre-expansion</text>
+    <!-- 5 Local Secs -->
+    <rect x="52"  y="116" width="72" height="50" rx="3" fill="#004D3A" stroke="#00C896" stroke-width="0.5"/><text font-family="Open Sans,sans-serif" font-size="10" fill="#E1F5EE" x="88"  y="136" text-anchor="middle" dominant-baseline="central">Local Sec.</text><text font-family="Open Sans,sans-serif" font-size="9" fill="#00A876" x="88"  y="153" text-anchor="middle" dominant-baseline="central">Entity 1</text>
+    <rect x="242" y="116" width="72" height="50" rx="3" fill="#004D3A" stroke="#00C896" stroke-width="0.5"/><text font-family="Open Sans,sans-serif" font-size="10" fill="#E1F5EE" x="278" y="136" text-anchor="middle" dominant-baseline="central">Local Sec.</text><text font-family="Open Sans,sans-serif" font-size="9" fill="#00A876" x="278" y="153" text-anchor="middle" dominant-baseline="central">Entity 2</text>
+    <rect x="444" y="116" width="72" height="50" rx="3" fill="#004D3A" stroke="#00C896" stroke-width="0.5"/><text font-family="Open Sans,sans-serif" font-size="10" fill="#E1F5EE" x="480" y="136" text-anchor="middle" dominant-baseline="central">Local Sec.</text><text font-family="Open Sans,sans-serif" font-size="9" fill="#00A876" x="480" y="153" text-anchor="middle" dominant-baseline="central">Entity 3</text>
+    <rect x="636" y="116" width="72" height="50" rx="3" fill="#004D3A" stroke="#00C896" stroke-width="0.5"/><text font-family="Open Sans,sans-serif" font-size="10" fill="#E1F5EE" x="672" y="136" text-anchor="middle" dominant-baseline="central">Local Sec.</text><text font-family="Open Sans,sans-serif" font-size="9" fill="#00A876" x="672" y="153" text-anchor="middle" dominant-baseline="central">Entity 4</text>
+    <rect x="836" y="116" width="72" height="50" rx="3" fill="#004D3A" stroke="#00C896" stroke-width="0.5"/><text font-family="Open Sans,sans-serif" font-size="10" fill="#E1F5EE" x="872" y="136" text-anchor="middle" dominant-baseline="central">Local Sec.</text><text font-family="Open Sans,sans-serif" font-size="9" fill="#00A876" x="872" y="153" text-anchor="middle" dominant-baseline="central">Entity 5</text>
+    <text font-family="Open Sans,sans-serif" font-size="9" fill="rgba(255,255,255,0.2)" x="480" y="210" text-anchor="middle">Local statutory filings · compliance reporting · escalation to Group Secretary within 24 hours</text>
+    <text font-family="Open Sans,sans-serif" font-size="9" fill="rgba(0,200,150,0.3)" x="480" y="228" text-anchor="middle">Post-expansion: Regional Secretaries added as intermediate tier between Local Secs and Group Secretariat</text>
+  </svg>
+  </div>
+</div>
+
+<!-- CLC DRILL -->
+<div class="drill" id="drill-clc">
+  <button class="drill-back" onclick="closeDrill('clc')">← Back to full structure</button>
+  <div class="drill-title">Chief Legal Counsel</div>
+  <div class="drill-sub">Pre-expansion · Board member · No deputies · 5 Local Legal Counsels report directly</div>
+  <div class="drill-wrap">
+  <svg width="100%" viewBox="0 0 960 280" xmlns="http://www.w3.org/2000/svg">
+    <rect x="336" y="20" width="288" height="52" rx="3" fill="#3A1E00" stroke="#EF9F27" stroke-width="0.8"/>
+    <rect x="336" y="20" width="4" height="52" rx="2" fill="#EF9F27"/>
+    <text font-family="Montserrat,sans-serif" font-size="13" font-weight="700" fill="#FAEEDA" x="480" y="40" text-anchor="middle" dominant-baseline="central">Chief Legal Counsel</text>
+    <text font-family="Open Sans,sans-serif" font-size="10" fill="#EF9F27" x="480" y="58" text-anchor="middle" dominant-baseline="central">Board member · no deputies pre-expansion · deputies added post-expansion</text>
+    <line x1="480" y1="72" x2="480" y2="100" stroke="#EF9F27" stroke-width="0.5" stroke-dasharray="4 3"/>
+    <line x1="88" y1="100" x2="872" y2="100" stroke="#EF9F27" stroke-width="0.5" stroke-dasharray="4 3"/>
+    <line x1="88"  y1="100" x2="88"  y2="116" stroke="#EF9F27" stroke-width="0.5" stroke-dasharray="4 3"/>
+    <line x1="278" y1="100" x2="278" y2="116" stroke="#EF9F27" stroke-width="0.5" stroke-dasharray="4 3"/>
+    <line x1="480" y1="100" x2="480" y2="116" stroke="#EF9F27" stroke-width="0.5" stroke-dasharray="4 3"/>
+    <line x1="672" y1="100" x2="672" y2="116" stroke="#EF9F27" stroke-width="0.5" stroke-dasharray="4 3"/>
+    <line x1="872" y1="100" x2="872" y2="116" stroke="#EF9F27" stroke-width="0.5" stroke-dasharray="4 3"/>
+    <text font-family="Open Sans,sans-serif" font-size="9" fill="#EF9F27" x="480" y="98" text-anchor="middle" opacity="0.7">direct reporting — no intermediate tier pre-expansion</text>
+    <rect x="52"  y="116" width="72" height="50" rx="3" fill="#3A1E00" stroke="#EF9F27" stroke-width="0.5"/><text font-family="Open Sans,sans-serif" font-size="10" fill="#FAEEDA" x="88"  y="136" text-anchor="middle" dominant-baseline="central">Legal</text><text font-family="Open Sans,sans-serif" font-size="9" fill="#FAC775" x="88"  y="153" text-anchor="middle" dominant-baseline="central">Entity 1</text>
+    <rect x="242" y="116" width="72" height="50" rx="3" fill="#3A1E00" stroke="#EF9F27" stroke-width="0.5"/><text font-family="Open Sans,sans-serif" font-size="10" fill="#FAEEDA" x="278" y="136" text-anchor="middle" dominant-baseline="central">Legal</text><text font-family="Open Sans,sans-serif" font-size="9" fill="#FAC775" x="278" y="153" text-anchor="middle" dominant-baseline="central">Entity 2</text>
+    <rect x="444" y="116" width="72" height="50" rx="3" fill="#3A1E00" stroke="#EF9F27" stroke-width="0.5"/><text font-family="Open Sans,sans-serif" font-size="10" fill="#FAEEDA" x="480" y="136" text-anchor="middle" dominant-baseline="central">Legal</text><text font-family="Open Sans,sans-serif" font-size="9" fill="#FAC775" x="480" y="153" text-anchor="middle" dominant-baseline="central">Entity 3</text>
+    <rect x="636" y="116" width="72" height="50" rx="3" fill="#3A1E00" stroke="#EF9F27" stroke-width="0.5"/><text font-family="Open Sans,sans-serif" font-size="10" fill="#FAEEDA" x="672" y="136" text-anchor="middle" dominant-baseline="central">Legal</text><text font-family="Open Sans,sans-serif" font-size="9" fill="#FAC775" x="672" y="153" text-anchor="middle" dominant-baseline="central">Entity 4</text>
+    <rect x="836" y="116" width="72" height="50" rx="3" fill="#3A1E00" stroke="#EF9F27" stroke-width="0.5"/><text font-family="Open Sans,sans-serif" font-size="10" fill="#FAEEDA" x="872" y="136" text-anchor="middle" dominant-baseline="central">Legal</text><text font-family="Open Sans,sans-serif" font-size="9" fill="#FAC775" x="872" y="153" text-anchor="middle" dominant-baseline="central">Entity 5</text>
+    <text font-family="Open Sans,sans-serif" font-size="9" fill="rgba(255,255,255,0.2)" x="480" y="210" text-anchor="middle">Local regulatory compliance · contract review · escalation to Chief Legal Counsel</text>
+    <text font-family="Open Sans,sans-serif" font-size="9" fill="rgba(239,159,39,0.3)" x="480" y="228" text-anchor="middle">Post-expansion: Regional Legal Counsels added as intermediate tier. Deputies added at 5 and 10 Regional Coordinating Councils.</text>
+  </svg>
+  </div>
+</div>
+
+<script>
+const data = {
+  board:{ badge:'Statutory · Fiduciary', bc:'pb-blue', title:'Group Board',
+    desc:'Six directors plus the Chief Legal Counsel exercising strategic oversight and reserved matter authority. Meets quarterly plus ad hoc. Appoints the Executive Chairman.',
+    list:['Capital structure, mission pivots, material litigation','New market entry, merger/acquisition, dissolution','Annual Governance Attestation review and entity tier classifications','Quorum: 4 of 6 directors (70% rule, excluding GCS and CLC)']},
+  committees:{ badge:'Statutory · Fiduciary', bc:'pb-blue', title:'Statutory Board Committees',
+    desc:'Permanent fiduciary organs of the Board exercising delegated authority. All chaired by a director.',
+    list:['Audit & Risk Committee — financial integrity, risk register, compliance status. Quarterly.','Nominations Committee — Executive Chairman appointment, director recruitment, succession planning. As required.']},
+  advisory:{ badge:'Advisory · Non-Fiduciary', bc:'pb-coral', title:'Advisory Council ×3',
+    desc:'Three non-fiduciary expert councils providing specialised guidance. Any council may be elevated to a statutory committee by Board resolution post-expansion.',
+    list:['Technology & Digital Innovation Council','Remuneration & Human Capital Council','Social, Ethics & Mission Alignment Council']},
+  chairman:{ badge:'Executive', bc:'pb-teal', title:'Executive Chairman',
+    desc:'Appointed by the Group Board. Ensures Board directives are translated into operational execution across entities while maintaining upward visibility of risks, performance, and intelligence from the entity layer — without requiring direct Board involvement in routine operations.',
+    list:['Appointed by and accountable to the Group Board','Chairs the Coordinating Team','Primary conduit between Board strategy and entity execution','Single point of accountability between Board and operational structure']},
+  coordteam:{ badge:'Operational · Coordination', bc:'pb-blue', title:'Coordinating Team',
+    desc:'The central oversight and alignment body across all entities. Does not undertake day-to-day operations. Chaired by the Executive Chairman.',
+    list:['Ensures execution remains aligned with Board directives','Maintains cross-entity coordination','Preserves visibility over operational risk within the Decision Rights Framework','Composed of Executive Chairman + 5 Local CEOs + Group Secretary (secretary)','Monthly meetings plus ad hoc; quorum: Executive Chairman + 3 of 5 CEOs']},
+  entity:{ badge:'Entity Level', bc:'pb-dim', title:'Local Entity',
+    desc:'Each legal entity operates in its jurisdiction subject to independent statutory and regulatory obligations. The CEO participates in the Coordinating Team.',
+    list:['Separate legal personality with independent statutory obligations','Subject to local company law, education regulation, and tax requirements']},
+  localboard:{ badge:'Entity Level', bc:'pb-dim', title:'Local Board',
+    desc:'Responsible for jurisdictional compliance and operational health. Meets quarterly minimum, 21 days before the Group Board.',
+    list:['Minimum 3 directors; quorum 2 of 3','Chair signs Annual Governance Attestation','Approves contracts up to 80% of gross income/expenditure','Regulatory responses and director appointments at entity level']},
+  localexec:{ badge:'Entity Level', bc:'pb-dim', title:'Local Executive',
+    desc:'Operational management team within each entity, executing entity-level strategy under Local Board oversight and within the Decision Rights Framework.',
+    list:['Day-to-day operational execution','Reports to the Local Board','Escalates material operational risks upward']}
+};
+
+function openPanel(id){
+  const d=data[id]; if(!d) return;
+  document.getElementById('p-badge').className='panel-badge '+d.bc;
+  document.getElementById('p-badge').textContent=d.badge;
+  document.getElementById('p-title').textContent=d.title;
+  document.getElementById('p-desc').textContent=d.desc;
+  document.getElementById('p-list').innerHTML=d.list.map(i=>'<li>'+i+'</li>').join('');
+  document.getElementById('overlay').classList.add('open');
+}
+function closeOverlay(e){ if(e.target===document.getElementById('overlay')) closePanels(); }
+function closePanels(){ document.getElementById('overlay').classList.remove('open'); }
+function openDrill(id){ document.getElementById('drill-'+id).classList.add('open'); }
+function closeDrill(id){ document.getElementById('drill-'+id).classList.remove('open'); }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closePanels(); ['secretary','clc'].forEach(id=>document.getElementById('drill-'+id).classList.remove('open')); }});
+</script>
+</body>
+</html>
